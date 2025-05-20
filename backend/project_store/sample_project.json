@@ -1,7 +1,7 @@
 {
   "id": "sample-project",
   "title": "Sample Project",
-  "image": "images/sample.png",
+  "image": "images/1.png",
   "repo_url": "https://github.com/example/sample-project",
   "description": "This is a sample project used to demonstrate the portfolio layout.",
   "demo_url": "https://example.com/demo"

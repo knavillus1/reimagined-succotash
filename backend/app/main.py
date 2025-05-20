@@ -19,6 +19,9 @@ app.add_middleware(
 
 repo = FileProjectRepository(Path(__file__).resolve().parents[1] / "project_store")
 
+images_path = Path(__file__).resolve().parents[1] / "project_store" / "images"
+app.mount("/images", StaticFiles(directory=images_path), name="images")
+
 templates = Jinja2Templates(directory=str(Path(__file__).resolve().parent / "templates"))
 
 
