@@ -30,6 +30,8 @@ uvicorn backend.app.main:app --reload
 
 Open <http://localhost:5173> during development. When the frontend is built, the
 FastAPI backend serves the compiled files on <http://localhost:8000>.
+During development the backend also renders individual project pages on
+<http://localhost:8000>, and the frontend links to these pages automatically.
 
 ### Build Frontend
 ```bash
