@@ -4,7 +4,8 @@ set -euo pipefail
 # Export optional debug environment variables if provided
 : "${DEBUG:=}"
 : "${VITE_ENABLE_DEBUG:=}"
-export DEBUG VITE_ENABLE_DEBUG
+: "${DATABASE_URL:=postgresql://postgres:postgres@localhost:5432/portfolio}"
+export DEBUG VITE_ENABLE_DEBUG DATABASE_URL
 
 # Function to kill existing processes
 kill_existing_processes() {

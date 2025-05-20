@@ -26,6 +26,15 @@ Run the FastAPI backend from the repository root so package imports work correct
 uvicorn backend.app.main:app --reload
 ```
 
+The backend expects a PostgreSQL database connection string in the
+`DATABASE_URL` environment variable. For example:
+
+```bash
+export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/portfolio
+```
+
+Tables are created automatically on startup.
+
 Open <http://localhost:5173> during development. When the frontend is built, the
 FastAPI backend serves the compiled files on <http://localhost:8000>.
 Project detail pages are now rendered by the frontend at `/project/<id>` and
@@ -52,19 +61,13 @@ DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 ```
 
 ### Adding Projects
-Project definition files live in `backend/project_store`. Optional images can be
-placed in `backend/project_store/images` and referenced from the `image` field.
-
-The JSON filename must match the `id` value exactly (e.g. `my-project.json`).
-
-Each JSON file must match this schema:
-```json
-{
-  "id": "my-project",
-  "title": "My Project",
-  "image": "images/my-image.png",
-  "repo_url": "https://github.com/user/my-project",
-  "description": "Project description",
-  "demo_url": "https://example.com/demo"
-}
+Add new records directly to the `projects` table using any PostgreSQL client.
+All columns correspond to the API fields shown below:
+```sql
+INSERT INTO projects (id, title, image, repo_url, description, demo_url)
+VALUES ('my-project', 'My Project', 'images/my-image.png',
+        'https://github.com/user/my-project',
+        'Project description', 'https://example.com/demo');
 ```
+Image files can still be placed under `backend/project_store/images` and
+referenced from the `image` column.

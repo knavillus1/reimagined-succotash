@@ -7,7 +7,9 @@ import logging
 import os
 
 from .models import Project
-from .repositories.project_repository import FileProjectRepository
+from .repositories.project_repository import SqlAlchemyProjectRepository
+from .database import SessionLocal, engine
+from .db_models import Base
 
 logging.basicConfig(
     level=logging.DEBUG if os.getenv("DEBUG") == "1" else logging.INFO,
@@ -24,7 +26,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-repo = FileProjectRepository(Path(__file__).resolve().parents[1] / "project_store")
+# Ensure database tables exist
+Base.metadata.create_all(bind=engine)
+repo = SqlAlchemyProjectRepository(SessionLocal)
 
 images_path = Path(__file__).resolve().parents[1] / "project_store" / "images"
 app.mount("/images", StaticFiles(directory=images_path), name="images")

@@ -12,3 +12,4 @@
 2025-05-22 Improve project detail page with banner and external links
   npm install failed: vite not found
 2025-05-20 Fix project file names to match IDs
+2025-05-20 Switch to Postgres database with SQLAlchemy repository

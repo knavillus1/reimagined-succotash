@@ -9,3 +9,6 @@ class Project(BaseModel):
     repo_url: str
     description: str
     demo_url: str
+
+    class Config:
+        orm_mode = True

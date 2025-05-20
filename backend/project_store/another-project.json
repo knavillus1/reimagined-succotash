@@ -1,8 +1,0 @@
-{
-  "id": "another-project",
-  "title": "Another Project",
-  "image": "images/2.png",
-  "repo_url": "https://github.com/example/another-project",
-  "description": "This is another sample project to showcase multiple entries.",
-  "demo_url": "https://example.com/demo2"
-}

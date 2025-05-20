@@ -3,9 +3,12 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import List, Protocol, Optional
+from typing import List, Protocol, Optional, Callable
+
+from sqlalchemy.orm import Session
 
 from ..models import Project
+from ..db_models import ProjectORM
 
 logger = logging.getLogger(__name__)
 
@@ -43,3 +46,22 @@ class FileProjectRepository:
         with path.open("r") as f:
             data = json.load(f)
             return Project(**data)
+
+
+class SqlAlchemyProjectRepository:
+    def __init__(self, session_factory: Callable[[], Session]):
+        self.session_factory = session_factory
+
+    def list_projects(self) -> List[Project]:
+        logger.debug("Querying all projects from database")
+        with self.session_factory() as session:
+            records = session.query(ProjectORM).all()
+            return [Project.from_orm(r) for r in records]
+
+    def get_project(self, project_id: str) -> Optional[Project]:
+        logger.debug("Fetching project %s from database", project_id)
+        with self.session_factory() as session:
+            record = session.get(ProjectORM, project_id)
+            if record:
+                return Project.from_orm(record)
+            return None
