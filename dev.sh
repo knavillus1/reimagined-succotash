@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Function to kill existing processes
+kill_existing_processes() {
+  echo "Checking for existing backend and frontend processes..."
+  BACKEND_PID=$(lsof -ti:8000 || true)
+  FRONTEND_PID=$(lsof -ti:5173 || true)
+
+  if [ -n "$BACKEND_PID" ]; then
+    echo "Stopping existing backend process (PID: $BACKEND_PID)..."
+    kill -9 $BACKEND_PID
+  fi
+
+  if [ -n "$FRONTEND_PID" ]; then
+    echo "Stopping existing frontend process (PID: $FRONTEND_PID)..."
+    kill -9 $FRONTEND_PID
+  fi
+}
+
+# Step 0: Kill existing processes
+kill_existing_processes
+
 # Step 1: Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then
   echo "Creating Python virtual environment..."
