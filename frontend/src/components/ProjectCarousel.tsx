@@ -54,7 +54,7 @@ export default function ProjectCarousel() {
           return (
             <div
               key={p.id}
-              onClick={() => (window.location.href = `/project/${p.id}`)}
+              onClick={() => (window.location.href = `${baseUrl}/project/${p.id}`)}
               className="relative w-64 h-40 flex-shrink-0 rounded shadow cursor-pointer bg-gray-200 bg-cover bg-center"
               style={img ? { backgroundImage: `url(${img})` } : {}}
             >
