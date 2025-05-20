@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { debugLog } from '../utils/logger'
 
 export interface Project {
   id: string
@@ -15,10 +16,20 @@ export default function ProjectList() {
   const [projects, setProjects] = useState<Project[]>([])
 
   useEffect(() => {
+    debugLog('Fetching projects from', `${baseUrl}/api/projects`)
     fetch(`${baseUrl}/api/projects`)
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-      .catch(() => setProjects([]))
+      .then((res) => {
+        debugLog('Received response', res.status)
+        return res.json()
+      })
+      .then((data) => {
+        debugLog('Project data', data)
+        setProjects(data)
+      })
+      .catch((err) => {
+        debugLog('Failed to load projects', err)
+        setProjects([])
+      })
   }, [])
 
   return (
