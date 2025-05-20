@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Export optional debug environment variables if provided
+: "${DEBUG:=}"
+: "${VITE_ENABLE_DEBUG:=}"
+export DEBUG VITE_ENABLE_DEBUG
+
 # Function to kill existing processes
 kill_existing_processes() {
   echo "Checking for existing backend and frontend processes..."

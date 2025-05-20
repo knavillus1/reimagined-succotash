@@ -40,6 +40,14 @@ npm run build
 ./dev.sh
 ```
 
+### Debug Logging
+Set the `DEBUG` environment variable to `1` for verbose backend logs and
+`VITE_ENABLE_DEBUG=true` for frontend console logs. Example:
+
+```bash
+DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
+```
+
 ### Adding Projects
 Project definition files live in `backend/project_store`. Optional images can be
 placed in `backend/project_store/images` and referenced from the `image` field.
