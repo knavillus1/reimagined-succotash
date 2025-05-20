@@ -17,10 +17,8 @@ pip install -r requirements.txt
 
 # Step 4: Start backend in background
 echo "Starting FastAPI backend..."
-cd backend/app
-uvicorn main:app --reload &
+uvicorn backend.app.main:app --reload &
 BACKEND_PID=$!
-cd ../../
 
 # Step 5: Start frontend in background
 echo "Starting frontend dev server..."

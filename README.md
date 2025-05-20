@@ -21,9 +21,9 @@ npm run dev
 ```
 
 ### Backend
+Run the FastAPI backend from the repository root so package imports work correctly:
 ```bash
-cd backend/app
-uvicorn main:app --reload
+uvicorn backend.app.main:app --reload
 ```
 
 Open <http://localhost:5173> during development. When the frontend is built, the
