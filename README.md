@@ -32,6 +32,10 @@ Project detail pages are now rendered by the frontend at `/project/<id>` and
 fetch their data from the backend API. The backend no longer serves HTML
 templates for project pages.
 
+Project detail pages include an in-browser GitHub repository viewer. The viewer
+clones the specified repository using `isomorphic-git` and displays a file tree
+and README preview directly in the browser.
+
 ### Build Frontend
 ```bash
 cd frontend
