@@ -178,3 +178,6 @@ frontend/node_modules/
 
 # macOS system files
 .DS_Store
+
+# Ignore root node_modules directory
+node_modules/

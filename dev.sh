@@ -49,6 +49,7 @@ BACKEND_PID=$!
 echo "Starting frontend dev server..."
 cd frontend
 npm install
+npm install buffer @esbuild-plugins/node-globals-polyfill
 npm run dev &
 FRONTEND_PID=$!
 cd ..
