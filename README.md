@@ -12,8 +12,6 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-The backend requires the `jinja2` package for HTML templates. It is installed
-automatically from `requirements.txt`.
 
 ### Frontend
 ```bash
@@ -31,7 +29,8 @@ uvicorn backend.app.main:app --reload
 Open <http://localhost:5173> during development. When the frontend is built, the
 FastAPI backend serves the compiled files on <http://localhost:8000>.
 Project detail pages are now rendered by the frontend at `/project/<id>` and
-fetch their data from the backend API.
+fetch their data from the backend API. The backend no longer serves HTML
+templates for project pages.
 
 ### Build Frontend
 ```bash

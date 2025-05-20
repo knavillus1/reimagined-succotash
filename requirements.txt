@@ -1,4 +1,3 @@
 pytest
 uvicorn
 fastapi
-jinja2
