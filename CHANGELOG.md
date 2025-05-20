@@ -9,3 +9,5 @@
 2025-05-20 Document backend project page URLs in README
 2025-05-21 Render project details within frontend at /project/<id>
 2025-05-20 Remove backend HTML fallback and Jinja2 template
+2025-05-22 Improve project detail page with banner and external links
+  npm install failed: vite not found

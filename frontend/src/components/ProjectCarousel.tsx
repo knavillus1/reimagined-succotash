@@ -1,24 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { debugLog } from '../utils/logger'
-
-export interface Project {
-  id: string
-  title: string
-  image?: string
-  repo_url: string
-  description: string
-  demo_url: string
-}
-
-const baseUrl = import.meta.env.DEV ? 'http://localhost:8000' : ''
+import { Project } from '../types'
+import { API_BASE_URL } from '../utils/api'
 
 export default function ProjectCarousel() {
   const [projects, setProjects] = useState<Project[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    debugLog('Fetching projects from', `${baseUrl}/api/projects`)
-    fetch(`${baseUrl}/api/projects`)
+    debugLog('Fetching projects from', `${API_BASE_URL}/api/projects`)
+    fetch(`${API_BASE_URL}/api/projects`)
       .then((res) => {
         debugLog('Received response', res.status)
         return res.json()
@@ -50,7 +41,7 @@ export default function ProjectCarousel() {
         className="overflow-x-auto flex space-x-4 py-4 px-8 scroll-smooth"
       >
         {projects.map((p) => {
-          const img = p.image ? `${baseUrl}/${p.image}` : undefined
+          const img = p.image ? `${API_BASE_URL}/${p.image}` : undefined
           return (
             <div
               key={p.id}
