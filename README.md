@@ -12,6 +12,8 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+The backend requires the `jinja2` package for HTML templates. It is installed
+automatically from `requirements.txt`.
 
 ### Frontend
 ```bash
