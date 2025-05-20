@@ -34,3 +34,24 @@ FastAPI backend serves the compiled files on <http://localhost:8000>.
 cd frontend
 npm run build
 ```
+
+### Run Both Frontend and Backend
+```bash
+./dev.sh
+```
+
+### Adding Projects
+Project definition files live in `backend/project_store`. Optional images can be
+placed in `backend/project_store/images` and referenced from the `image` field.
+
+Each JSON file must match this schema:
+```json
+{
+  "id": "my-project",
+  "title": "My Project",
+  "image": "images/my-image.png",
+  "repo_url": "https://github.com/user/my-project",
+  "description": "Project description",
+  "demo_url": "https://example.com/demo"
+}
+```
