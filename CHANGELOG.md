@@ -11,3 +11,4 @@
 2025-05-20 Remove backend HTML fallback and Jinja2 template
 2025-05-22 Improve project detail page with banner and external links
   npm install failed: vite not found
+2025-05-20 Fix project file names to match IDs

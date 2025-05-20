@@ -55,6 +55,8 @@ DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 Project definition files live in `backend/project_store`. Optional images can be
 placed in `backend/project_store/images` and referenced from the `image` field.
 
+The JSON filename must match the `id` value exactly (e.g. `my-project.json`).
+
 Each JSON file must match this schema:
 ```json
 {
