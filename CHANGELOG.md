@@ -8,3 +8,4 @@
 2025-05-20 Fix project links to open backend project pages in dev mode
 2025-05-20 Document backend project page URLs in README
 2025-05-21 Render project details within frontend at /project/<id>
+2025-05-20 Remove backend HTML fallback and Jinja2 template
