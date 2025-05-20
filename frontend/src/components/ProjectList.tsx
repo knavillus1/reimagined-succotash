@@ -38,7 +38,7 @@ export default function ProjectList() {
         <div key={p.id} className="inline-block w-64 bg-white shadow rounded p-4">
           <h3 className="text-lg font-semibold mb-2">{p.title}</h3>
           <p className="text-sm mb-2">{p.description.slice(0, 80)}...</p>
-          <a className="text-blue-500" href={`${baseUrl}/project/${p.id}`}>View Project</a>
+          <a className="text-blue-500" href={`/project/${p.id}`}>View Project</a>
         </div>
       ))}
     </div>
