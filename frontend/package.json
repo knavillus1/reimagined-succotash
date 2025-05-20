@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "isomorphic-git": "^1.21.0",
+    "@isomorphic-git/lightning-fs": "^4.5.1",
+    "marked": "^7.0.0",
+    "highlight.js": "^11.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
