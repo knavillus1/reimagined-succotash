@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    nodePolyfills({ globals: { process: true, buffer: true } }),
+  ],
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
   },
   resolve: {
     alias: {
@@ -18,9 +22,7 @@ export default defineConfig({
         global: 'globalThis',
       },
       plugins: [
-        NodeGlobalsPolyfillPlugin({
-          buffer: true,
-        }),
+        NodeGlobalsPolyfillPlugin({ process: true, buffer: true }),
       ],
     },
   },

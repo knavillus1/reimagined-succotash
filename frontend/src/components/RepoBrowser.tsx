@@ -1,22 +1,10 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, type ReactNode } from 'react'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/web'
 import LightningFS from '@isomorphic-git/lightning-fs'
-import { marked } from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
-
-marked.setOptions({
-  highlight(code, lang) {
-    try {
-      return lang
-        ? hljs.highlight(code, { language: lang }).value
-        : hljs.highlightAuto(code).value
-    } catch {
-      return code
-    }
-  },
-})
+import MarkdownRenderer from './MarkdownRenderer'
 
 interface Entry {
   name: string
@@ -28,7 +16,7 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
   const fsRef = useRef<LightningFS | null>(null)
   const [entries, setEntries] = useState<Entry[]>([])
   const [currentPath, setCurrentPath] = useState('/')
-  const [content, setContent] = useState('')
+  const [content, setContent] = useState<ReactNode | string>('')
   const [loading, setLoading] = useState(true)
 
   const dir = '/repo'
@@ -80,7 +68,7 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
     const data = await pfs.readFile(dir + path, 'utf8')
     const lower = path.toLowerCase()
     if (lower.endsWith('.md')) {
-      setContent(marked.parse(data))
+      setContent(<MarkdownRenderer markdown={data} />)
     } else if (lower.endsWith('.json')) {
       try {
         const obj = JSON.parse(data)
@@ -136,7 +124,15 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
         ))}
       </div>
       <div className="w-2/3 overflow-y-auto p-2">
-        {content ? <div dangerouslySetInnerHTML={{ __html: content }} /> : <p>Select a file</p>}
+        {content ? (
+          typeof content === 'string' ? (
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          ) : (
+            content
+          )
+        ) : (
+          <p>Select a file</p>
+        )}
       </div>
     </div>
   )
