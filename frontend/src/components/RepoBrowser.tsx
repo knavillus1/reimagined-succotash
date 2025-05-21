@@ -23,11 +23,22 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
 
   useEffect(() => {
     async function cloneRepo() {
-      const fs = new LightningFS('repo-fs')
+      // Use a unique FS name per repoUrl to avoid cached conflicts
+      const fsName = `repo-fs-${btoa(repoUrl)}`
+      const fs = new LightningFS(fsName)
       fsRef.current = fs
       const pfs = fs.promises
+      // Wipe the repo directory if it exists
+      try {
+        await pfs.rmdir(dir, { recursive: true })
+      } catch (_) {}
       try {
         await pfs.mkdir(dir)
+      } catch (_) {}
+
+      // Remove .git if it exists to avoid conflicts
+      try {
+        await pfs.rmdir(`${dir}/.git`, { recursive: true })
       } catch (_) {}
 
       await git.clone({
