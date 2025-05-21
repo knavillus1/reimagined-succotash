@@ -6,6 +6,18 @@ import { marked } from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 
+marked.setOptions({
+  highlight(code, lang) {
+    try {
+      return lang
+        ? hljs.highlight(code, { language: lang }).value
+        : hljs.highlightAuto(code).value
+    } catch {
+      return code
+    }
+  },
+})
+
 interface Entry {
   name: string
   path: string
@@ -93,7 +105,7 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
             i + 1
           }</span>${line}</span>`
       )
-      .join('\n')
+      .join('')
     return `<pre class="hljs">${numbered}</pre>`
   }
 
