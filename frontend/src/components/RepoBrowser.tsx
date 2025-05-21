@@ -151,8 +151,8 @@ export default function RepoBrowser({
   }
 
   return (
-    <div className="flex border-2 border-primary rounded-xl h-96 overflow-hidden text-sm w-full max-w-full md:max-w-screen-lg bg-white">
-      <div className="w-1/3 overflow-y-auto border-r-2 border-primary p-4 bg-light-bg">
+    <div className="flex border-2 border-primary rounded-xl w-full max-w-full md:max-w-screen-lg bg-white">
+      <div className="w-1/3 border-r-2 border-primary p-4 bg-light-bg text-sm">
         {parentPath && (
           <div className="cursor-pointer px-2 py-1 rounded hover:bg-primary hover:text-white transition" onClick={() => openDir(parentPath)}>
             ../
@@ -172,7 +172,7 @@ export default function RepoBrowser({
           </div>
         ))}
       </div>
-      <div className="w-2/3 overflow-y-auto overflow-x-auto p-6 bg-light-bg font-mono text-gray-800">
+      <div className="w-2/3 overflow-x-auto p-6 bg-light-bg font-mono text-gray-800 text-xs">
         {content ? (
           typeof content === 'string' ? (
             <div dangerouslySetInnerHTML={{ __html: content }} />
