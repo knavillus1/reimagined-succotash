@@ -22,3 +22,5 @@
 2025-05-21 Add exclude_paths field and remove GitHub link from project detail view
 2025-05-21 Reorganize project store with projects directory and GlobalRepoOmissions
 2025-05-21 Create new repo in LightngFS for each new repo to avoid collisions
+2025-05-21 Use global omissions with per-project exclusions and highlight selected file in repo browser
+  npm build failed: vite not found

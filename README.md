@@ -60,7 +60,9 @@ DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 Project definition files live in `backend/project_store/projects`. Optional
 images can be placed in `backend/project_store/images` and referenced from the
 `image` field. Global repository exclusions can be listed in
-`backend/project_store/GlobalRepoOmissions.json` but are not yet used.
+`backend/project_store/GlobalRepoOmissions.json`.
+These global omissions are combined with each project's `exclude_paths` to hide
+files in the in-browser repository viewer.
 
 The JSON filename must match the `id` value exactly (e.g. `my-project.json`).
 
