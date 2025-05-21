@@ -17,3 +17,4 @@
 2025-05-24 Add Markdown styling and fix code spacing in RepoBrowser
 2025-05-24 Switch RepoBrowser to react-markdown with unified code highlighting
 2025-05-24 Make RepoBrowser width responsive with horizontal scroll
+2025-05-25 Autoload README in RepoBrowser

@@ -42,7 +42,19 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
       })
 
       setLoading(false)
-      openDir('/')
+      await openDir('/')
+
+      // Automatically open README if present
+      const readmeNames = ['README.md', 'readme.md', 'README', 'readme']
+      for (const name of readmeNames) {
+        try {
+          await pfs.stat(`${dir}/${name}`)
+          await openFile(`/${name}`)
+          break
+        } catch (_) {
+          // ignore missing file
+        }
+      }
     }
 
     cloneRepo().catch((err) => console.error(err))
