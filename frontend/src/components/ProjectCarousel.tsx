@@ -31,14 +31,14 @@ export default function ProjectCarousel() {
   return (
     <div className="relative">
       <button
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-2 shadow"
+        className="absolute left-0 top-1/2 -translate-y-1/2 bg-primary text-white rounded-full p-3 shadow-lg hover:bg-secondary transition"
         onClick={() => scroll(-300)}
       >
         &#8249;
       </button>
       <div
         ref={containerRef}
-        className="overflow-x-auto flex space-x-4 py-4 px-8 scroll-smooth"
+        className="overflow-x-auto flex space-x-6 py-6 px-8 scroll-smooth"
       >
         {projects.map((p) => {
           const img = p.image ? `${API_BASE_URL}/${p.image}` : undefined
@@ -46,10 +46,10 @@ export default function ProjectCarousel() {
             <div
               key={p.id}
               onClick={() => (window.location.href = `/project/${p.id}`)}
-              className="relative w-64 h-40 flex-shrink-0 rounded shadow cursor-pointer bg-gray-200 bg-cover bg-center"
+              className="relative w-64 h-40 flex-shrink-0 rounded-xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition bg-gray-200 bg-cover bg-center"
               style={img ? { backgroundImage: `url(${img})` } : {}}
             >
-              <div className="absolute inset-0 bg-black bg-opacity-40 rounded flex items-end p-2">
+              <div className="absolute inset-0 bg-dark-accent bg-opacity-50 flex items-end p-3">
                 <h3 className="text-white text-lg font-semibold">{p.title}</h3>
               </div>
             </div>
@@ -57,7 +57,7 @@ export default function ProjectCarousel() {
         })}
       </div>
       <button
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-2 shadow"
+        className="absolute right-0 top-1/2 -translate-y-1/2 bg-primary text-white rounded-full p-3 shadow-lg hover:bg-secondary transition"
         onClick={() => scroll(300)}
       >
         &#8250;
