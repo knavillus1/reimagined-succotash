@@ -14,3 +14,4 @@
 2025-05-20 Fix project file names to match IDs
 2025-05-23 Add in-browser repo viewer using isomorphic-git
 2025-05-24 Improve RepoBrowser rendering for markdown, json and code
+2025-05-24 Add Markdown styling and fix code spacing in RepoBrowser
