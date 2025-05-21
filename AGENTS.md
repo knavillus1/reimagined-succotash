@@ -11,11 +11,11 @@ Do NOT attempt to run any command which requires open network communication.  Yo
 
 ## Testing Instructions
 
-## CHANGELOG/README Instructions
+## CHANGELOG/DEVELOPMENT Instructions
 Append a single line summary to CHANGELOG.md describing the changes with a preceeding timestamp
 if errors were encountered, list them indented below the changelog row with a single line summary
 
-When components are added that require manual application startup for local testing/debug, document all steps and commands neccessary to set up the local environment and start services/components in README.md using explcit commands.
+When components are added that require manual application startup for local testing/debug, document all steps and commands neccessary to set up the local environment and start services/components in DEVELOPMENT.md using explcit commands.  These changes will need to be mirrored on dev.sh (see below), which is a one-stop script to set up the environment from scratch and start the application for local testing.
 
 ## PR instructions
 
