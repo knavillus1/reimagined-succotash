@@ -5,7 +5,6 @@ import LightningFS from '@isomorphic-git/lightning-fs'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import MarkdownRenderer from './MarkdownRenderer'
-import { API_BASE_URL } from '../utils/api'
 
 interface Entry {
   name: string
@@ -15,42 +14,31 @@ interface Entry {
 
 export default function RepoBrowser({
   repoUrl,
-  excludePaths,
+  effectiveExcludePaths,
 }: {
   repoUrl: string
-  excludePaths?: string[]
+  effectiveExcludePaths?: string[]
 }) {
   const fsRef = useRef<LightningFS | null>(null)
   const [entries, setEntries] = useState<Entry[]>([])
   const [currentPath, setCurrentPath] = useState('/')
   const [content, setContent] = useState<ReactNode | string>('')
   const [loading, setLoading] = useState(true)
-  const [globalOmissions, setGlobalOmissions] = useState<string[]>([])
   const [selectedFile, setSelectedFile] = useState<string | null>(null)
 
   const allExcludes = useMemo(
-    () =>
-      [...globalOmissions, ...(excludePaths || [])].map((p) =>
-        p.replace(/^\/+/, '')
-      ),
-    [globalOmissions, excludePaths]
+    () => (effectiveExcludePaths || []).map((p) => p.replace(/^\/+/g, '')),
+    [effectiveExcludePaths]
   )
 
   function isExcluded(path: string) {
-    const normalized = path.replace(/^\/+/, '')
+    const normalized = path.replace(/^\/+/g, '')
     return allExcludes.some(
       (ex) => normalized === ex || normalized.startsWith(`${ex}/`)
     )
   }
 
   const dir = '/repo'
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/global_repo_omissions`)
-      .then((res) => res.json())
-      .then((data) => setGlobalOmissions(data))
-      .catch((err) => console.error('Failed to load global omissions', err))
-  }, [])
 
   useEffect(() => {
     async function cloneRepo() {
@@ -154,7 +142,6 @@ export default function RepoBrowser({
       .join('')
     return `<pre class="hljs">${numbered}</pre>`
   }
-
 
   const parentPath =
     currentPath === '/' ? null : currentPath.split('/').slice(0, -1).join('/') || '/'

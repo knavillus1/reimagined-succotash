@@ -6,4 +6,5 @@ export interface Project {
   description: string
   demo_url: string
   exclude_paths?: string[]
+  effective_exclude_paths?: string[]
 }

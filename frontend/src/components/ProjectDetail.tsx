@@ -30,7 +30,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
       </div>
     </article>
     <div className="mt-6 w-full">
-      <RepoBrowser repoUrl={project.repo_url} excludePaths={project.exclude_paths} />
+      <RepoBrowser repoUrl={project.repo_url} effectiveExcludePaths={project.effective_exclude_paths} />
     </div>
     </>
   )
