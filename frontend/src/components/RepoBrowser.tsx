@@ -3,6 +3,8 @@ import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/web'
 import LightningFS from '@isomorphic-git/lightning-fs'
 import { marked } from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css'
 
 interface Entry {
   name: string
@@ -64,16 +66,37 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
     if (!fsRef.current) return
     const pfs = fsRef.current.promises
     const data = await pfs.readFile(dir + path, 'utf8')
-    if (path.toLowerCase().endsWith('.md')) {
+    const lower = path.toLowerCase()
+    if (lower.endsWith('.md')) {
       setContent(marked.parse(data))
+    } else if (lower.endsWith('.json')) {
+      try {
+        const obj = JSON.parse(data)
+        setContent(wrapCode(JSON.stringify(obj, null, 2), 'json'))
+      } catch {
+        setContent(wrapCode(data, 'json'))
+      }
     } else {
-      setContent(`<pre>${escapeHtml(data)}</pre>`)
+      setContent(wrapCode(data))
     }
   }
 
-  function escapeHtml(str: string) {
-    return str.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c))
+  function wrapCode(code: string, language?: string) {
+    const highlighted = language
+      ? hljs.highlight(code, { language }).value
+      : hljs.highlightAuto(code).value
+    const lines = highlighted.split('\n')
+    const numbered = lines
+      .map(
+        (line, i) =>
+          `<span class="block"><span class="text-gray-500 select-none mr-2">${
+            i + 1
+          }</span>${line}</span>`
+      )
+      .join('\n')
+    return `<pre class="hljs">${numbered}</pre>`
   }
+
 
   const parentPath =
     currentPath === '/' ? null : currentPath.split('/').slice(0, -1).join('/') || '/'
