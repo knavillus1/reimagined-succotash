@@ -106,7 +106,7 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
   }
 
   return (
-    <div className="flex border rounded h-96 overflow-hidden text-sm">
+    <div className="flex border rounded h-96 overflow-hidden text-sm w-full max-w-full md:max-w-screen-lg">
       <div className="w-1/3 overflow-y-auto border-r p-2">
         {parentPath && (
           <div className="cursor-pointer" onClick={() => openDir(parentPath)}>
@@ -123,7 +123,7 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
           </div>
         ))}
       </div>
-      <div className="w-2/3 overflow-y-auto p-2">
+      <div className="w-2/3 overflow-y-auto overflow-x-auto p-2">
         {content ? (
           typeof content === 'string' ? (
             <div dangerouslySetInnerHTML={{ __html: content }} />

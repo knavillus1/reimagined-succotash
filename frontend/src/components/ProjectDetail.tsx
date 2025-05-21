@@ -37,7 +37,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </div>
       </div>
     </article>
-    <div className="mt-4">
+    <div className="mt-4 w-full">
       <RepoBrowser repoUrl={project.repo_url} />
     </div>
     </>
