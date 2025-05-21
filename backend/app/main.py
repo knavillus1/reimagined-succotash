@@ -24,7 +24,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-repo = FileProjectRepository(Path(__file__).resolve().parents[1] / "project_store")
+repo = FileProjectRepository(
+    Path(__file__).resolve().parents[1] / "project_store" / "projects"
+)
 
 images_path = Path(__file__).resolve().parents[1] / "project_store" / "images"
 app.mount("/images", StaticFiles(directory=images_path), name="images")
