@@ -26,14 +26,6 @@ export default function ProjectDetail({ project }: { project: Project }) {
           >
             Live Demo
           </a>
-          <a
-            className="text-primary hover:text-secondary underline"
-            href={project.repo_url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub Repo
-          </a>
         </div>
       </div>
     </article>
