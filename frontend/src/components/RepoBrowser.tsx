@@ -96,7 +96,8 @@ export default function RepoBrowser({
     const names = await pfs.readdir(dir + path)
     const ents: Entry[] = []
     for (const name of names) {
-      const fullPath = `${path}/${name}`
+      const normalized = path.endsWith('/') ? path.slice(0, -1) : path
+      const fullPath = `${normalized}/${name}`
       if (isExcluded(fullPath)) continue
       const stat = await pfs.stat(`${dir}${fullPath}`)
       ents.push({ name, path: fullPath, isDir: stat.isDirectory() })
