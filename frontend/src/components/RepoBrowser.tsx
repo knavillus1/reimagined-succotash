@@ -42,8 +42,8 @@ export default function RepoBrowser({
 
   useEffect(() => {
     async function cloneRepo() {
-      // Use a unique FS name per repoUrl to avoid cached conflicts
-      const fsName = `repo-fs-${btoa(repoUrl)}`
+      // Use a unique FS name per load to ensure we start fresh each time
+      const fsName = `repo-fs-${btoa(repoUrl)}-${Date.now()}`
       const fs = new LightningFS(fsName)
       fsRef.current = fs
       const pfs = fs.promises
