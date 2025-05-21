@@ -57,7 +57,6 @@ fi
 
 # Run npm commands in the frontend directory
 npm install
-npm install buffer @esbuild-plugins/node-globals-polyfill
 npm run dev &
 FRONTEND_PID=$!
 cd ..

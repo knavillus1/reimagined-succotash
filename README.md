@@ -34,7 +34,8 @@ templates for project pages.
 
 Project detail pages include an in-browser GitHub repository viewer. The viewer
 clones the specified repository using `isomorphic-git` and displays a file tree
-and README preview directly in the browser.
+and README preview directly in the browser. Markdown and code blocks are
+rendered with `react-markdown` and Highlight.js for consistent styling.
 
 ### Build Frontend
 ```bash
