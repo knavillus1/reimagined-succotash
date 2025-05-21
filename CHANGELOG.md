@@ -25,3 +25,4 @@
 2025-05-21 Use global omissions with per-project exclusions and highlight selected file in repo browser
   npm build failed: vite not found
 2025-05-21 Make RepoBrowser height dynamic and shrink code font
+2025-05-26 Fix README selection highlight in RepoBrowser
