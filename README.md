@@ -57,8 +57,10 @@ DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 ```
 
 ### Adding Projects
-Project definition files live in `backend/project_store`. Optional images can be
-placed in `backend/project_store/images` and referenced from the `image` field.
+Project definition files live in `backend/project_store/projects`. Optional
+images can be placed in `backend/project_store/images` and referenced from the
+`image` field. Global repository exclusions can be listed in
+`backend/project_store/GlobalRepoOmissions.json` but are not yet used.
 
 The JSON filename must match the `id` value exactly (e.g. `my-project.json`).
 

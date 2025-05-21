@@ -20,3 +20,4 @@
 2025-05-25 Autoload README in RepoBrowser
 2025-05-25 Add modern style
 2025-05-21 Add exclude_paths field and remove GitHub link from project detail view
+2025-05-21 Reorganize project store with projects directory and GlobalRepoOmissions
