@@ -20,7 +20,7 @@ export default function ProjectDetailPage({ projectId }: { projectId: string }) 
   }
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
+    <div className="p-4 w-full max-w-screen-lg mx-auto">
       <ProjectDetail project={project} />
     </div>
   )
