@@ -70,6 +70,8 @@ Each JSON file must match this schema:
   "image": "images/my-image.png",
   "repo_url": "https://github.com/user/my-project",
   "description": "Project description",
-  "demo_url": "https://example.com/demo"
+  "demo_url": "https://example.com/demo",
+  "exclude_paths": ["dist", "node_modules"]
 }
 ```
+`exclude_paths` is optional and lists files that should be hidden in the built-in repository viewer.

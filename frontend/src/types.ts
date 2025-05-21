@@ -5,4 +5,5 @@ export interface Project {
   repo_url: string
   description: string
   demo_url: string
+  exclude_paths?: string[]
 }

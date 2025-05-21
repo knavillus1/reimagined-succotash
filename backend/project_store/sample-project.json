@@ -4,5 +4,6 @@
   "image": "images/1.png",
   "repo_url": "https://github.com/knavillus1/codex_bootstrap",
   "description": "This is a sample project used to demonstrate the portfolio layout.",
-  "demo_url": "https://example.com/demo"
+  "demo_url": "https://example.com/demo",
+  "exclude_paths": ["dist", "node_modules"]
 }
