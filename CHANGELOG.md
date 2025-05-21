@@ -12,3 +12,19 @@
 2025-05-22 Improve project detail page with banner and external links
   npm install failed: vite not found
 2025-05-20 Fix project file names to match IDs
+2025-05-23 Add in-browser repo viewer using isomorphic-git
+2025-05-24 Improve RepoBrowser rendering for markdown, json and code
+2025-05-24 Add Markdown styling and fix code spacing in RepoBrowser
+2025-05-24 Switch RepoBrowser to react-markdown with unified code highlighting
+2025-05-24 Make RepoBrowser width responsive with horizontal scroll
+2025-05-25 Autoload README in RepoBrowser
+2025-05-25 Add modern style
+2025-05-21 Add exclude_paths field and remove GitHub link from project detail view
+2025-05-21 Reorganize project store with projects directory and GlobalRepoOmissions
+2025-05-21 Create new repo in LightngFS for each new repo to avoid collisions
+2025-05-21 Use global omissions with per-project exclusions and highlight selected file in repo browser
+  npm build failed: vite not found
+2025-05-21 Make RepoBrowser height dynamic and shrink code font
+2025-05-26 Fix README selection highlight in RepoBrowser
+2025-05-21 Force new LightningFS instance per load to avoid stale repos
+  npm build failed: vite not found

@@ -47,7 +47,15 @@ BACKEND_PID=$!
 
 # Step 5: Start frontend in background
 echo "Starting frontend dev server..."
+
+# Ensure we are in the correct directory before running npm commands
 cd frontend
+if [ ! -f "package.json" ]; then
+  echo "Error: package.json not found in the frontend directory. Please check your working directory."
+  exit 1
+fi
+
+# Run npm commands in the frontend directory
 npm install
 npm run dev &
 FRONTEND_PID=$!

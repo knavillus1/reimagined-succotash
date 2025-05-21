@@ -2,7 +2,8 @@
   "id": "sample-project",
   "title": "Sample Project",
   "image": "images/1.png",
-  "repo_url": "https://github.com/knavillus1/codex_bootstrap",
+  "repo_url": "https://github.com/knavillus1/reimagined-succotash",
   "description": "This is a sample project used to demonstrate the portfolio layout.",
-  "demo_url": "https://example.com/demo"
+  "demo_url": "https://example.com/demo",
+  "exclude_paths": ["dev.sh", "install.sh","AGENTS.md"]
 }

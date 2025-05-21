@@ -32,6 +32,11 @@ Project detail pages are now rendered by the frontend at `/project/<id>` and
 fetch their data from the backend API. The backend no longer serves HTML
 templates for project pages.
 
+Project detail pages include an in-browser GitHub repository viewer. The viewer
+clones the specified repository using `isomorphic-git` and displays a file tree
+and README preview directly in the browser. Markdown and code blocks are
+rendered with `react-markdown` and Highlight.js for consistent styling.
+
 ### Build Frontend
 ```bash
 cd frontend
@@ -52,8 +57,12 @@ DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 ```
 
 ### Adding Projects
-Project definition files live in `backend/project_store`. Optional images can be
-placed in `backend/project_store/images` and referenced from the `image` field.
+Project definition files live in `backend/project_store/projects`. Optional
+images can be placed in `backend/project_store/images` and referenced from the
+`image` field. Global repository exclusions can be listed in
+`backend/project_store/GlobalRepoOmissions.json`.
+These global omissions are combined with each project's `exclude_paths` to hide
+files in the in-browser repository viewer.
 
 The JSON filename must match the `id` value exactly (e.g. `my-project.json`).
 
@@ -65,6 +74,8 @@ Each JSON file must match this schema:
   "image": "images/my-image.png",
   "repo_url": "https://github.com/user/my-project",
   "description": "Project description",
-  "demo_url": "https://example.com/demo"
+  "demo_url": "https://example.com/demo",
+  "exclude_paths": ["dist", "node_modules"]
 }
 ```
+`exclude_paths` is optional and lists files that should be hidden in the built-in repository viewer.

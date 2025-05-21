@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class Project(BaseModel):
@@ -9,3 +9,4 @@ class Project(BaseModel):
     repo_url: str
     description: str
     demo_url: str
+    exclude_paths: Optional[List[str]] = None
