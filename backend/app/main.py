@@ -5,6 +5,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import logging
 import os
+import json
 
 from .models import Project
 from .repositories.project_repository import FileProjectRepository
@@ -28,6 +29,17 @@ repo = FileProjectRepository(
     Path(__file__).resolve().parents[1] / "project_store" / "projects"
 )
 
+global_omissions_path = (
+    Path(__file__).resolve().parents[1] / "project_store" / "GlobalRepoOmissions.json"
+)
+
+
+def load_global_omissions() -> list[str]:
+    if not global_omissions_path.exists():
+        return []
+    with global_omissions_path.open("r") as f:
+        return json.load(f)
+
 images_path = Path(__file__).resolve().parents[1] / "project_store" / "images"
 app.mount("/images", StaticFiles(directory=images_path), name="images")
 
@@ -48,6 +60,12 @@ def get_project(project_id: str):
         raise HTTPException(status_code=404, detail="Project not found")
     logger.debug("Found project %s", project_id)
     return project
+
+
+@app.get("/api/global_repo_omissions", response_model=list[str])
+def get_global_repo_omissions():
+    logger.debug("Returning global repo omissions")
+    return load_global_omissions()
 
 # Path to the built frontend assets
 build_path = Path(__file__).resolve().parents[1] / 'frontend' / 'dist'

@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef, type ReactNode } from 'react'
+import { useEffect, useState, useRef, type ReactNode, useMemo } from 'react'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/web'
 import LightningFS from '@isomorphic-git/lightning-fs'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import MarkdownRenderer from './MarkdownRenderer'
+import { API_BASE_URL } from '../utils/api'
 
 interface Entry {
   name: string
@@ -12,14 +13,44 @@ interface Entry {
   isDir: boolean
 }
 
-export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
+export default function RepoBrowser({
+  repoUrl,
+  excludePaths,
+}: {
+  repoUrl: string
+  excludePaths?: string[]
+}) {
   const fsRef = useRef<LightningFS | null>(null)
   const [entries, setEntries] = useState<Entry[]>([])
   const [currentPath, setCurrentPath] = useState('/')
   const [content, setContent] = useState<ReactNode | string>('')
   const [loading, setLoading] = useState(true)
+  const [globalOmissions, setGlobalOmissions] = useState<string[]>([])
+  const [selectedFile, setSelectedFile] = useState<string | null>(null)
+
+  const allExcludes = useMemo(
+    () =>
+      [...globalOmissions, ...(excludePaths || [])].map((p) =>
+        p.replace(/^\/+/, '')
+      ),
+    [globalOmissions, excludePaths]
+  )
+
+  function isExcluded(path: string) {
+    const normalized = path.replace(/^\/+/, '')
+    return allExcludes.some(
+      (ex) => normalized === ex || normalized.startsWith(`${ex}/`)
+    )
+  }
 
   const dir = '/repo'
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/global_repo_omissions`)
+      .then((res) => res.json())
+      .then((data) => setGlobalOmissions(data))
+      .catch((err) => console.error('Failed to load global omissions', err))
+  }, [])
 
   useEffect(() => {
     async function cloneRepo() {
@@ -77,12 +108,15 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
     const names = await pfs.readdir(dir + path)
     const ents: Entry[] = []
     for (const name of names) {
-      const stat = await pfs.stat(`${dir}${path}/${name}`)
-      ents.push({ name, path: `${path}/${name}`, isDir: stat.isDirectory() })
+      const fullPath = `${path}/${name}`
+      if (isExcluded(fullPath)) continue
+      const stat = await pfs.stat(`${dir}${fullPath}`)
+      ents.push({ name, path: fullPath, isDir: stat.isDirectory() })
     }
     setEntries(ents)
     setCurrentPath(path)
     setContent('')
+    setSelectedFile(null)
   }
 
   async function openFile(path: string) {
@@ -102,6 +136,7 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
     } else {
       setContent(wrapCode(data))
     }
+    setSelectedFile(path)
   }
 
   function wrapCode(code: string, language?: string) {
@@ -139,7 +174,11 @@ export default function RepoBrowser({ repoUrl }: { repoUrl: string }) {
         {entries.map((e) => (
           <div
             key={e.path}
-            className="cursor-pointer px-2 py-1 rounded hover:bg-primary hover:text-white transition"
+            className={`cursor-pointer px-2 py-1 rounded transition ${
+              selectedFile === e.path
+                ? 'bg-secondary text-white'
+                : 'hover:bg-primary hover:text-white'
+            }`}
             onClick={() => (e.isDir ? openDir(e.path) : openFile(e.path))}
           >
             {e.isDir ? e.name + '/' : e.name}
