@@ -48,7 +48,26 @@ resource site 'Microsoft.Web/sites@2023-01-01' = {
     httpsOnly:    true
     siteConfig: {
       linuxFxVersion: linuxFxVersion
-      alwaysOn:       false          // free plan can’t keep-alive
+      alwaysOn:       false
+      appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker backend.app.main:app'
+      appSettings: [
+        {
+          name: 'WEBSITE_RUN_FROM_PACKAGE'
+          value: '1'
+        }
+        {
+          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
+          value: 'false'
+        }
+        {
+          name: 'WEBSITE_NODE_DEFAULT_VERSION'
+          value: '20'
+        }
+        {
+          name: 'GUNICORN_CMD_ARGS'
+          value: '--timeout 60'
+        }
+      ]
     }
   }
 }
