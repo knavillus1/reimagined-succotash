@@ -19,9 +19,9 @@ var planName = '${webAppName}-plan'
 
 // Map the SKU to the pricing tier expected by the ARM API
 var skuToTier = {
-  'F1':   'Free'
-  'B1':   'Basic'
-  'P1v3': 'PremiumV3'
+  F1: 'Free'
+  B1: 'Basic'
+  P1v3: 'PremiumV3'
 }
 var tier = skuToTier[skuName]
 
