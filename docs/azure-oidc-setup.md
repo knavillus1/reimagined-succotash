@@ -101,13 +101,18 @@ Follow these steps to allow GitHub Actions to deploy to your Azure subscription 
 ### 3. Assign the App Access to Azure Resources
 
 1. Go to the Resource Group (e.g., `knavillus10-portfolio`)
-2. Click **Access control (IAM)** → **+ Add → Add role assignment**
-3. Role: `Website Contributor` (for Web Apps)
-4. Assign to: the **App registration** from Step 1
+2. Click **Access control (IAM)** → **+ Add → Add role assignment**
+3. **Grant the following role(s)**
+
+   * `Web Plan Contributor` – needed to create or update the **App Service plan** (`Microsoft.Web/serverfarms/*`)
+   * `Website Contributor` – (optional) manage the **Web App** itself (`Microsoft.Web/sites/*`)
+   * **Shortcut:** assign a single broader role such as `Contributor` if you prefer simplicity over strict least‑privilege.
+4. **Scope:** keep the assignment at the *Resource Group* level for least‑privilege.
+5. **Principal:** select the **App registration** created in Step 1.
 
 ---
 
-### 4. Add GitHub Repository Secrets
+### 4. Add GitHub Repository Secrets Add GitHub Repository Secrets
 
 In GitHub:
 
