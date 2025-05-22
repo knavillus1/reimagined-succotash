@@ -28,7 +28,7 @@ jobs:
       - name: Deploy Bicep
         uses: azure/arm-deploy@v2
         with:
-          scope:              knavillus10-portfolio
+          scope:              resourcegroup
           resourceGroupName:  ${{ env.AZURE_RG }}
           template:           infra/main.bicep
           parameters:         infra/dev.parameters.json
