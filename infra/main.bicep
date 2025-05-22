@@ -49,7 +49,7 @@ resource site 'Microsoft.Web/sites@2023-01-01' = {
     siteConfig: {
       linuxFxVersion: linuxFxVersion
       alwaysOn:       false
-      appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app'
+      appCommandLine: 'gunicorn --chdir /home/site/wwwroot -w 4 -k uvicorn.workers.UvicornWorker main:app' // Added --chdir and targeting main:app
       appSettings: [
         {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
@@ -69,7 +69,7 @@ resource site 'Microsoft.Web/sites@2023-01-01' = {
         }
         {
           name: 'PYTHONPATH'
-          value: '/home/site/wwwroot/site-packages'
+          value: '/home/site/wwwroot:/home/site/wwwroot/site-packages' // Added /home/site/wwwroot
         }
       ]
     }
