@@ -49,7 +49,7 @@ resource site 'Microsoft.Web/sites@2023-01-01' = {
     siteConfig: {
       linuxFxVersion: linuxFxVersion
       alwaysOn:       false
-      appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker backend.app.main:app'
+      appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app'
       appSettings: [
         {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
