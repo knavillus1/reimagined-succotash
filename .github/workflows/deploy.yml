@@ -1,7 +1,9 @@
 name: Build & Deploy to Azure Web App
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["Deploy WebApp (Bicep)"]
+    types:
+      - completed
 
 env:
   AZURE_WEBAPP_NAME: knavillus10-portfolio-webapp
@@ -10,6 +12,7 @@ env:
 
 jobs:
   build-and-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
