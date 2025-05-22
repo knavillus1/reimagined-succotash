@@ -67,6 +67,10 @@ resource site 'Microsoft.Web/sites@2023-01-01' = {
           name: 'GUNICORN_CMD_ARGS'
           value: '--timeout 60'
         }
+        {
+          name: 'PYTHONPATH'
+          value: '/home/site/wwwroot/site-packages'
+        }
       ]
     }
   }
