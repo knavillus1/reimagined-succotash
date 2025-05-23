@@ -16,6 +16,10 @@ export DEBUG VITE_ENABLE_DEBUG
 
 export AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME AZURE_BLOB_STORAGE_ACCOUNT_URL AZURE_BLOB_CONTAINER_NAME
 
+# CORS allowed origins for the backend (comma-separated)
+: "${ALLOW_ORIGINS:=http://localhost:5173}"
+export ALLOW_ORIGINS
+
 # Function to kill existing processes
 kill_existing_processes() {
   echo "Checking for existing backend and frontend processes..."
