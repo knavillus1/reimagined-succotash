@@ -141,4 +141,9 @@ def get_global_repo_omissions():
 
 # Mount static frontend build output
 static_dir = Path(__file__).parent / "static"
-app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
+if static_dir.exists():
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
+else:
+    logger.warning(
+        "Static directory %s not found. Skipping static file mounting.", static_dir
+    )
