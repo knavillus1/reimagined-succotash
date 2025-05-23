@@ -29,3 +29,4 @@
 2025-05-21 Force new LightningFS instance per load to avoid stale repos
   npm build failed: vite not found
 2025-05-27 Replace file-based project store with Azure Table Storage
+2025-05-23 Handle missing frontend build directory and document build output
