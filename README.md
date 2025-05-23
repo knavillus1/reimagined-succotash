@@ -7,6 +7,7 @@ Reimagined Succotash is a modern portfolio and project showcase web application.
 - Project data stored in Azure Table Storage
 - React frontend with responsive, modern UI (Tailwind CSS)
 - Project carousel and detail pages
+- Client-side routing with React Router
 - In-browser repository viewer with syntax highlighting and markdown rendering
 - Easy local development with a single startup script (`dev.sh`)
 
@@ -17,7 +18,7 @@ For a production build, run `npm run build` inside the `frontend` directory. The
 
 ## Technologies Used
 - Python 3, FastAPI, Uvicorn
-- React 18, Vite, Tailwind CSS
+- React 18, Vite, Tailwind CSS, React Router
 - isomorphic-git, LightningFS, highlight.js, react-markdown
 - Azure Table Storage
 
