@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { debugLog } from '../utils/logger'
 import { Project } from '../types'
 import { API_BASE_URL } from '../utils/api'
@@ -6,6 +7,7 @@ import { API_BASE_URL } from '../utils/api'
 export default function ProjectCarousel() {
   const [projects, setProjects] = useState<Project[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     debugLog('Fetching projects from', `${API_BASE_URL}/api/projects`)
@@ -45,7 +47,7 @@ export default function ProjectCarousel() {
           return (
             <div
               key={p.id}
-              onClick={() => (window.location.href = `/project/${p.id}`)}
+              onClick={() => navigate(`/project/${p.id}`)}
               className="relative w-64 h-40 flex-shrink-0 rounded-xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition bg-gray-200 bg-cover bg-center"
               style={img ? { backgroundImage: `url(${img})` } : {}}
             >
