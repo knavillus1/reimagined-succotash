@@ -23,8 +23,9 @@
 2025-05-21 Reorganize project store with projects directory and GlobalRepoOmissions
 2025-05-21 Create new repo in LightngFS for each new repo to avoid collisions
 2025-05-21 Use global omissions with per-project exclusions and highlight selected file in repo browser
-  npm build failed: vite not found
+ npm build failed: vite not found
 2025-05-21 Make RepoBrowser height dynamic and shrink code font
 2025-05-26 Fix README selection highlight in RepoBrowser
 2025-05-21 Force new LightningFS instance per load to avoid stale repos
   npm build failed: vite not found
+2025-05-23 Set default Azure Tables variables in dev.sh

@@ -6,6 +6,11 @@ set -euo pipefail
 : "${VITE_ENABLE_DEBUG:=}"
 export DEBUG VITE_ENABLE_DEBUG
 
+# Set required Azure Tables variables with sane defaults
+: "${AZURE_TABLES_ACCOUNT_URL:=https://knavillus10portfoliostrg.table.core.windows.net}"
+: "${AZURE_TABLES_TABLE_NAME:=projects}"
+export AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME
+
 # Function to kill existing processes
 kill_existing_processes() {
   echo "Checking for existing backend and frontend processes..."
