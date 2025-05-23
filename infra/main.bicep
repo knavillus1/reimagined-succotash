@@ -69,7 +69,7 @@ resource site 'Microsoft.Web/sites@2023-01-01' = {
         }
         {
           name: 'PYTHONPATH'
-          value: '/home/site/wwwroot:/home/site/wwwroot/site-packages' // Added /home/site/wwwroot
+          value: '/home/site/wwwroot/home/' // Added /home/site/wwwroot
         }
       ]
     }
