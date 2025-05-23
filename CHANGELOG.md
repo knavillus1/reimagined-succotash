@@ -30,3 +30,5 @@
   npm build failed: vite not found
 2025-05-27 Replace file-based project store with Azure Table Storage
 2025-05-23 Handle missing frontend build directory and document build output
+2025-05-23 Add React Router navigation and update dev.sh
+  tests failed: Azure authentication error during collection

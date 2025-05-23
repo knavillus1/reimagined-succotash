@@ -66,6 +66,7 @@ if [ ! -f "package.json" ]; then
 fi
 
 # Run npm commands in the frontend directory
+# Always install dependencies so new packages are picked up
 npm install
 npm run dev &
 FRONTEND_PID=$!
