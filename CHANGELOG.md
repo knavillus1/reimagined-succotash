@@ -30,3 +30,5 @@
   npm build failed: vite not found
 2025-05-27 Replace file-based project store with Azure Table Storage
 2025-05-23 Handle missing frontend build directory and document build output
+2025-05-28 Accept allowed origins from environment variable
+  tests failed: missing Azure credentials

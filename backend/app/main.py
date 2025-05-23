@@ -23,9 +23,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+# Configure allowed CORS origins from environment variable. Defaults to
+# "http://localhost:5173" for local development.
+allowed_origins_env = os.getenv("ALLOW_ORIGINS", "http://localhost:5173")
+allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )

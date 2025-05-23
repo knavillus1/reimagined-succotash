@@ -11,7 +11,7 @@ Reimagined Succotash is a modern portfolio and project showcase web application.
 - Easy local development with a single startup script (`dev.sh`)
 
 ## Local Development
-Set `AZURE_TABLES_ACCOUNT_URL` and `AZURE_TABLES_TABLE_NAME` then run `./dev.sh` to start both backend and frontend for local development.
+Set `AZURE_TABLES_ACCOUNT_URL` and `AZURE_TABLES_TABLE_NAME` then run `./dev.sh` to start both backend and frontend for local development. Optionally set `ALLOW_ORIGINS` to a comma-separated list of origins for CORS; it defaults to `http://localhost:5173`.
 
 For a production build, run `npm run build` inside the `frontend` directory. The compiled files are placed in `backend/app/static` and served by FastAPI.
 
