@@ -9,7 +9,12 @@ export DEBUG VITE_ENABLE_DEBUG
 # Set required Azure Tables variables with sane defaults
 : "${AZURE_TABLES_ACCOUNT_URL:=https://knavillus10portfoliostrg.table.core.windows.net}"
 : "${AZURE_TABLES_TABLE_NAME:=projects}"
-export AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME
+
+# Set required Azure Blob Storage variables with sane defaults
+: "${AZURE_BLOB_STORAGE_ACCOUNT_URL:=https://knavillus10portfoliostrg.blob.core.windows.net}"
+: "${AZURE_BLOB_CONTAINER_NAME:=images}"
+
+export AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME AZURE_BLOB_STORAGE_ACCOUNT_URL AZURE_BLOB_CONTAINER_NAME
 
 # Function to kill existing processes
 kill_existing_processes() {

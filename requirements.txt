@@ -3,3 +3,5 @@ uvicorn
 fastapi
 azure-data-tables
 azure-identity
+azure-storage-blob
+httpx # Required for FastAPI TestClient
