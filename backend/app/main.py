@@ -9,7 +9,7 @@ import json
 from typing import List, Dict, Any
 
 from .models import Project
-from .repositories.project_repository import FileProjectRepository
+from .repositories.project_repository import TableProjectRepository
 
 logging.basicConfig(
     level=logging.DEBUG if os.getenv("DEBUG") == "1" else logging.INFO,
@@ -26,9 +26,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-repo = FileProjectRepository(
-    Path(__file__).resolve().parents[1] / "project_store" / "projects"
-)
+account_url = os.environ.get("AZURE_TABLES_ACCOUNT_URL")
+table_name = os.environ.get("AZURE_TABLES_TABLE_NAME")
+partition_key = os.environ.get("AZURE_TABLES_PARTITION", "projects")
+if not account_url or not table_name:
+    raise RuntimeError("Azure Table configuration missing: AZURE_TABLES_ACCOUNT_URL and AZURE_TABLES_TABLE_NAME must be set")
+
+repo = TableProjectRepository(account_url, table_name, partition=partition_key)
 
 global_omissions_path = (
     Path(__file__).resolve().parents[1] / "project_store" / "GlobalRepoOmissions.json"
