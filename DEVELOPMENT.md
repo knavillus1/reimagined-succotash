@@ -56,6 +56,16 @@ Set the `DEBUG` environment variable to `1` for verbose backend logs and
 DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 ```
 
+### Azure Table Storage
+`dev.sh` sets the Azure Table Storage variables used by the backend. Override
+them if you need to point to a different table account:
+
+```bash
+export AZURE_TABLES_ACCOUNT_URL=https://knavillus10portfoliostrg.table.core.windows.net
+export AZURE_TABLES_TABLE_NAME=projects
+./dev.sh
+```
+
 ### Adding Projects
 Project definition files live in `backend/project_store/projects`. Optional
 images can be placed in `backend/project_store/images` and referenced from the
