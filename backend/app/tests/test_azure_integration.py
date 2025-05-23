@@ -1,17 +1,17 @@
-import sys  # Added import
-import os  # Added import
+import sys
+import os
+import socket
+
 import pytest
 from fastapi.testclient import TestClient
 from azure.data.tables import TableServiceClient
-from azure.storage.blob import BlobServiceClient, BlobClient
+from azure.storage.blob import BlobServiceClient
 from azure.identity import DefaultAzureCredential
 
 # Add project root to sys.path to allow for absolute imports like 'from backend.app.main import app'
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
-
-from backend.app.main import app  # Assuming your FastAPI app instance is named 'app'
 
 # Configuration - Ensure these are set in your environment for testing
 AZURE_TABLES_ACCOUNT_URL = os.environ.get("AZURE_TABLES_ACCOUNT_URL")
@@ -20,28 +20,53 @@ AZURE_TABLES_PARTITION = os.environ.get("AZURE_TABLES_PARTITION", "projects")
 AZURE_BLOB_STORAGE_ACCOUNT_URL = os.environ.get("AZURE_BLOB_STORAGE_ACCOUNT_URL")
 AZURE_BLOB_CONTAINER_NAME = os.environ.get("AZURE_BLOB_CONTAINER_NAME", "images")
 
-# Check if essential environment variables are set
-SKIP_AZURE_TESTS = not all([AZURE_TABLES_ACCOUNT_URL, AZURE_TABLES_TABLE_NAME, AZURE_BLOB_STORAGE_ACCOUNT_URL])
+# Determine if the environment has network connectivity by attempting a simple
+# socket connection. If this fails, assume we are in a restricted environment
+# and skip the Azure integration tests entirely.
+def _has_network(host: str = "8.8.8.8", port: int = 53, timeout: int = 3) -> bool:
+    try:
+        socket.create_connection((host, port), timeout=timeout)
+        return True
+    except OSError:
+        return False
+
+NETWORK_AVAILABLE = _has_network()
+
+# Check if essential environment variables are set or network is unavailable
+SKIP_AZURE_TESTS = not all(
+    [AZURE_TABLES_ACCOUNT_URL, AZURE_TABLES_TABLE_NAME, AZURE_BLOB_STORAGE_ACCOUNT_URL]
+)
+SKIP_NETWORK_TESTS = not NETWORK_AVAILABLE
+SKIP_TESTS = SKIP_AZURE_TESTS or SKIP_NETWORK_TESTS
 
 @pytest.fixture(scope="module")
 def client():
+    if SKIP_TESTS:
+        pytest.skip(
+            "Skipping Azure integration tests due to missing configuration or no network"
+        )
+    from backend.app.main import app
     return TestClient(app)
 
 @pytest.fixture(scope="module")
 def table_service_client():
-    if SKIP_AZURE_TESTS:
-        pytest.skip("Skipping Azure tests due to missing environment variables.")
+    if SKIP_TESTS:
+        pytest.skip(
+            "Skipping Azure tests due to missing environment variables or no network."
+        )
     credential = DefaultAzureCredential()
     return TableServiceClient(endpoint=AZURE_TABLES_ACCOUNT_URL, credential=credential)
 
 @pytest.fixture(scope="module")
 def blob_service_client():
-    if SKIP_AZURE_TESTS:
-        pytest.skip("Skipping Azure tests due to missing environment variables.")
+    if SKIP_TESTS:
+        pytest.skip(
+            "Skipping Azure tests due to missing environment variables or no network."
+        )
     credential = DefaultAzureCredential()
     return BlobServiceClient(account_url=AZURE_BLOB_STORAGE_ACCOUNT_URL, credential=credential)
 
-@pytest.mark.skipif(SKIP_AZURE_TESTS, reason="Azure environment variables not set")
+@pytest.mark.skipif(SKIP_TESTS, reason="Azure environment variables not set or network unavailable")
 def test_get_project_from_table_storage(client, table_service_client):
     """
     Test fetching a specific project ('ProjectExample1') from Azure Table Storage.
@@ -62,7 +87,7 @@ def test_get_project_from_table_storage(client, table_service_client):
     assert "title" in project_data
     # Add more assertions based on the expected structure of 'ProjectExample1'
 
-@pytest.mark.skipif(SKIP_AZURE_TESTS, reason="Azure environment variables not set")
+@pytest.mark.skipif(SKIP_TESTS, reason="Azure environment variables not set or network unavailable")
 def test_get_image_from_blob_storage(client, blob_service_client):
     """
     Test fetching an image ('1.png') from Azure Blob Storage.
@@ -80,7 +105,7 @@ def test_get_image_from_blob_storage(client, blob_service_client):
     # Check if content is not empty, or even compare with a local copy if feasible
     assert len(response.content) > 0
 
-@pytest.mark.skipif(SKIP_AZURE_TESTS, reason="Azure environment variables not set")
+@pytest.mark.skipif(SKIP_TESTS, reason="Azure environment variables not set or network unavailable")
 def test_get_nonexistent_image_from_blob_storage(client):
     """
     Test fetching a non-existent image from Azure Blob Storage.
@@ -88,7 +113,7 @@ def test_get_nonexistent_image_from_blob_storage(client):
     response = client.get(f"/api/images/nonexistentimage12345.png")
     assert response.status_code == 404
 
-@pytest.mark.skipif(SKIP_AZURE_TESTS, reason="Azure environment variables not set")
+@pytest.mark.skipif(SKIP_TESTS, reason="Azure environment variables not set or network unavailable")
 def test_get_nonexistent_project_from_table_storage(client):
     """
     Test fetching a non-existent project from Azure Table Storage.

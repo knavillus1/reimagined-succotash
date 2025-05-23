@@ -35,3 +35,4 @@
 2025-05-23 Add React Router navigation and update dev.sh
   tests failed: Azure authentication error during collection
 2025-05-23 Fix dev script newline and disable npm audits
+2025-05-29 Skip Azure integration tests when network unavailable
