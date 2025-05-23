@@ -1,7 +1,7 @@
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 import logging
 import os
@@ -42,7 +42,41 @@ def load_global_omissions() -> list[str]:
         return json.load(f)
 
 images_path = Path(__file__).resolve().parents[1] / "project_store" / "images"
-app.mount("/images", StaticFiles(directory=images_path), name="images")
+
+# Optionally serve images from Azure Blob Storage if a connection string is
+# provided. Otherwise fall back to local static files.
+azure_conn_str = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+azure_container = os.getenv("AZURE_STORAGE_CONTAINER", "images")
+
+if azure_conn_str:
+    try:
+        from azure.storage.blob import BlobServiceClient
+
+        blob_service_client = BlobServiceClient.from_connection_string(
+            azure_conn_str
+        )
+        container_client = blob_service_client.get_container_client(azure_container)
+
+        @app.get("/images/{image_path:path}")
+        def fetch_image(image_path: str):
+            try:
+                blob_client = container_client.get_blob_client(image_path)
+                data = blob_client.download_blob().readall()
+                props = blob_client.get_blob_properties()
+                media_type = (
+                    props.content_settings.content_type
+                    or "application/octet-stream"
+                )
+                return Response(content=data, media_type=media_type)
+            except Exception:
+                logger.exception("Failed to fetch image %s from Azure", image_path)
+                raise HTTPException(status_code=404, detail="Image not found")
+
+    except Exception:
+        logger.exception("Failed to configure Azure Blob Storage, falling back to local images")
+        app.mount("/images", StaticFiles(directory=images_path), name="images")
+else:
+    app.mount("/images", StaticFiles(directory=images_path), name="images")
 
 
 @app.get("/api/projects", response_model=List[Dict[str, Any]])

@@ -30,6 +30,19 @@ static_dir = Path(__file__).parent / "static"
 app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 After each frontend build, copy the dist/ folder into backend/app/static.
 
+4. 📦 **Upload Project Images**
+
+Project images can be stored in Azure Blob Storage so the backend can proxy them
+without exposing the storage account. Set the `AZURE_STORAGE_CONNECTION_STRING`
+and optional `AZURE_STORAGE_CONTAINER` environment variables, then run:
+
+```bash
+python backend/scripts/upload_images_to_azure.py
+```
+
+When these variables are configured, the backend automatically serves `/images`
+from Azure.
+
 3. 🤖 Add GitHub Action for CI/CD
 
 Create .github/workflows/deploy.yml:

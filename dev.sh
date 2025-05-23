@@ -4,7 +4,9 @@ set -euo pipefail
 # Export optional debug environment variables if provided
 : "${DEBUG:=}"
 : "${VITE_ENABLE_DEBUG:=}"
-export DEBUG VITE_ENABLE_DEBUG
+: "${AZURE_STORAGE_CONNECTION_STRING:=}"
+: "${AZURE_STORAGE_CONTAINER:=images}"
+export DEBUG VITE_ENABLE_DEBUG AZURE_STORAGE_CONNECTION_STRING AZURE_STORAGE_CONTAINER
 
 # Function to kill existing processes
 kill_existing_processes() {
@@ -39,6 +41,12 @@ echo "Using virtual environment at ./venv"
 # Step 3: Install Python dependencies
 echo "Installing Python dependencies..."
 pip install -r requirements.txt
+
+# Optional: upload project images to Azure Blob Storage if a connection string is provided
+if [ -n "$AZURE_STORAGE_CONNECTION_STRING" ]; then
+  echo "Uploading images to Azure storage..."
+  python backend/scripts/upload_images_to_azure.py || true
+fi
 
 # Step 4: Start backend in background
 echo "Starting FastAPI backend..."

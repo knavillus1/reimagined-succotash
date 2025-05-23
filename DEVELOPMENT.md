@@ -79,3 +79,15 @@ Each JSON file must match this schema:
 }
 ```
 `exclude_paths` is optional and lists files that should be hidden in the built-in repository viewer.
+
+### Azure Image Storage
+Images referenced in project JSON files can optionally be served from Azure Blob
+Storage. Set the following environment variables:
+
+- `AZURE_STORAGE_CONNECTION_STRING` – connection string for your storage account
+- `AZURE_STORAGE_CONTAINER` – blob container name (defaults to `images`)
+
+With these variables set, running `./dev.sh` will automatically upload the
+contents of `backend/project_store/images` to the container and the backend will
+proxy `/images/<file>` requests from Azure so browsers do not need to
+authenticate directly.

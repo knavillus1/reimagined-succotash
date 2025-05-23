@@ -28,3 +28,4 @@
 2025-05-26 Fix README selection highlight in RepoBrowser
 2025-05-21 Force new LightningFS instance per load to avoid stale repos
   npm build failed: vite not found
+2025-05-27 Add Azure image storage support and upload script
