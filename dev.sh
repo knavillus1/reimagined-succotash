@@ -67,7 +67,7 @@ fi
 
 # Run npm commands in the frontend directory
 # Always install dependencies so new packages are picked up
-npm install
+npm install --no-audit --progress=false
 npm run dev &
 FRONTEND_PID=$!
 cd ..
