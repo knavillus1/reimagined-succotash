@@ -56,6 +56,20 @@ Set the `DEBUG` environment variable to `1` for verbose backend logs and
 DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 ```
 
+```bash
+DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
+```
+
+### Azure Table Storage
+`dev.sh` sets the Azure Table Storage variables used by the backend. Override
+them if you need to point to a different table account:
+
+```bash
+export AZURE_TABLES_ACCOUNT_URL=https://knavillus10portfoliostrg.table.core.windows.net
+export AZURE_TABLES_TABLE_NAME=projects
+./dev.sh
+```
+
 ### Adding Projects
 Projects are now stored in Azure Table Storage. Each entity uses partition key
 `projects` and the project ID as the row key. The project JSON is stored in the
@@ -67,8 +81,13 @@ Example entity:
 ```json
 {
   "PartitionKey": "projects",
-  "RowKey": "my-project",
-  "data": "{\"id\": \"my-project\", \"title\": \"My Project\"}"
+  "RowKey": "another-project",
+  "title": "Another Project",
+  "image": "images/2.png",
+  "repo_url": "https://github.com/example/another-project",
+  "description": "This is another sample project to showcase multiple entries.",
+  "demo_url": "https://example.com/demo2",
+  "exclude_paths": '["dist", "node_modules"]'  # store as JSON string
 }
 ```
 

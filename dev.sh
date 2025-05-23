@@ -4,9 +4,12 @@ set -euo pipefail
 # Export optional debug environment variables if provided
 : "${DEBUG:=}"
 : "${VITE_ENABLE_DEBUG:=}"
-: "${AZURE_TABLES_ACCOUNT_URL:?AZURE_TABLES_ACCOUNT_URL is required}"
-: "${AZURE_TABLES_TABLE_NAME:?AZURE_TABLES_TABLE_NAME is required}"
-export DEBUG VITE_ENABLE_DEBUG AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME
+export DEBUG VITE_ENABLE_DEBUG
+
+# Set required Azure Tables variables with sane defaults
+: "${AZURE_TABLES_ACCOUNT_URL:=https://knavillus10portfoliostrg.table.core.windows.net}"
+: "${AZURE_TABLES_TABLE_NAME:=projects}"
+export AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME
 
 # Function to kill existing processes
 kill_existing_processes() {
