@@ -4,7 +4,9 @@ set -euo pipefail
 # Export optional debug environment variables if provided
 : "${DEBUG:=}"
 : "${VITE_ENABLE_DEBUG:=}"
-export DEBUG VITE_ENABLE_DEBUG
+: "${AZURE_TABLES_ACCOUNT_URL:?AZURE_TABLES_ACCOUNT_URL is required}"
+: "${AZURE_TABLES_TABLE_NAME:?AZURE_TABLES_TABLE_NAME is required}"
+export DEBUG VITE_ENABLE_DEBUG AZURE_TABLES_ACCOUNT_URL AZURE_TABLES_TABLE_NAME
 
 # Function to kill existing processes
 kill_existing_processes() {

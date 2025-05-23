@@ -57,25 +57,23 @@ DEBUG=1 VITE_ENABLE_DEBUG=true ./dev.sh
 ```
 
 ### Adding Projects
-Project definition files live in `backend/project_store/projects`. Optional
-images can be placed in `backend/project_store/images` and referenced from the
-`image` field. Global repository exclusions can be listed in
-`backend/project_store/GlobalRepoOmissions.json`.
-These global omissions are combined with each project's `exclude_paths` to hide
-files in the in-browser repository viewer.
+Projects are now stored in Azure Table Storage. Each entity uses partition key
+`projects` and the project ID as the row key. The project JSON is stored in the
+`data` column. Because arrays aren't supported directly, serialize
+`exclude_paths` to a JSON string.
 
-The JSON filename must match the `id` value exactly (e.g. `my-project.json`).
+Example entity:
 
-Each JSON file must match this schema:
 ```json
 {
-  "id": "my-project",
-  "title": "My Project",
-  "image": "images/my-image.png",
-  "repo_url": "https://github.com/user/my-project",
-  "description": "Project description",
-  "demo_url": "https://example.com/demo",
-  "exclude_paths": ["dist", "node_modules"]
+  "PartitionKey": "projects",
+  "RowKey": "my-project",
+  "data": "{\"id\": \"my-project\", \"title\": \"My Project\"}"
 }
 ```
-`exclude_paths` is optional and lists files that should be hidden in the built-in repository viewer.
+
+Set `AZURE_TABLES_ACCOUNT_URL` and `AZURE_TABLES_TABLE_NAME` before running the
+backend. The executing identity must have the **Storage Table Data
+Contributor** role so `DefaultAzureCredential` can authenticate.
+
+Global repository exclusions remain in `backend/project_store/GlobalRepoOmissions.json`.
